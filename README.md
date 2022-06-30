@@ -1,31 +1,6 @@
-<!-- README START -->
+# Storybook Addon Components ER Diagram
 
-# Storybook Addon Kit
-
-Simplify the creation of Storybook addons
-
-- 📝 Live-editing in development
-- ⚛️ React/JSX support
-- 📦 Transpiling and bundling with Babel
-- 🏷 Plugin metadata
-- 🚢 Release management with [Auto](https://github.com/intuit/auto)
-- 🧺 Boilerplate and sample code
-- 🛄 ESM support
-- 🛂 TypeScript by default with option to eject to JS
-
-## Getting Started
-
-Click the **Use this template** button to get started.
-
-![](https://user-images.githubusercontent.com/321738/125058439-8d9ef880-e0aa-11eb-9211-e6d7be812959.gif)
-
-Clone your repository and install dependencies.
-
-```sh
-yarn
-```
-
-<!-- README END -->
+description
 
 ### Development scripts
 
@@ -44,8 +19,6 @@ This will convert all code to JS. It is a destructive process, so we recommended
 
 The addon code lives in `src`. It demonstrates all core addon related concepts. The three [UI paradigms](https://storybook.js.org/docs/react/addons/addon-types#ui-based-addons)
 
-- `src/Tool.js`
-- `src/Panel.js`
 - `src/Tab.js`
 
 Which, along with the addon itself, are registered in `src/preset/manager.js`.

@@ -1,47 +1,74 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { styled } from "@storybook/theming";
 import { Title, Source, Link } from "@storybook/components";
+import createEngine, {
+  DefaultLinkModel,
+  DefaultNodeModel,
+  DiagramModel,
+} from "@projectstorm/react-diagrams";
+import {
+  useGlobals,
+  useAddonState,
+  useChannel,
+  useArgs,
+  useStoryPrepared,
+} from "@storybook/api";
 
-const TabWrapper = styled.div(({ theme }) => ({
-  background: theme.background.content,
-  padding: "4rem 20px",
-  minHeight: "100vh",
-  boxSizing: "border-box",
-}));
-
-const TabInner = styled.div({
-  maxWidth: 768,
-  marginLeft: "auto",
-  marginRight: "auto",
-});
+import { ADDON_ID, EVENTS } from "../constants";
+import { CanvasWidget } from "@projectstorm/react-canvas-core";
 
 interface TabContentProps {
   code: string;
 }
 
-export const TabContent: React.FC<TabContentProps> = ({ code }) => (
-  <TabWrapper>
-    <TabInner>
-      <Title>My Addon</Title>
-      <p>
-        Your addon can create a custom tab in Storybook. For example, the
-        official{" "}
-        <Link href="https://storybook.js.org/docs/react/writing-docs/introduction">
-          @storybook/addon-docs
-        </Link>{" "}
-        uses this pattern.
-      </p>
-      <p>
-        You have full control over what content is being rendered here. You can
-        use components from{" "}
-        <Link href="https://github.com/storybookjs/storybook/tree/master/lib/components">
-          @storybook/components
-        </Link>{" "}
-        to match the look and feel of Storybook, for example the{" "}
-        <code>&lt;Source /&gt;</code> component below. Or build a completely
-        custom UI.
-      </p>
-      <Source code={code} language="jsx" format={false} />
-    </TabInner>
-  </TabWrapper>
-);
+const engine = createEngine();
+
+// node 1
+const node1 = new DefaultNodeModel({
+  name: "Node 1",
+  color: "#F24785",
+});
+node1.setPosition(100, 100);
+let port1 = node1.addInPort("In");
+
+// node 2
+const node2 = new DefaultNodeModel({
+  name: "Node 2",
+  color: "#F24785",
+});
+node2.setPosition(200, 200);
+let port2 = node2.addOutPort("Out");
+
+// link them and add a label to the link
+const link = port1.link<DefaultLinkModel>(port2);
+
+const model = new DiagramModel();
+model.addAll(node1, node2, link);
+engine.setModel(model);
+
+const Wrapper = styled.div({
+  width: "100%",
+  height: " 100%",
+  backgroundColor: "#333333",
+});
+
+const StyledCanvasWidget = styled(CanvasWidget)({
+  width: "100%",
+  height: " 100%",
+});
+
+export const TabContent: React.FC<TabContentProps> = (props) => {
+  const [args, updateArgs, resetArgs] = useArgs();
+
+  const [{ erDiagram }, updateGlobals] = useGlobals();
+
+  useEffect(() => {
+    console.log("erDiagram", erDiagram);
+  }, []);
+
+  return (
+    <Wrapper>
+      <StyledCanvasWidget engine={engine} />
+    </Wrapper>
+  );
+};
