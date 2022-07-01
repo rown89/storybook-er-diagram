@@ -57,7 +57,7 @@ const buildModel = async ({
   try {
     const StoryNode = new DefaultNodeModel({
       name: erDiagram.name,
-      color: "#F7D602",
+      color: "#029bf4",
     });
     StoryNode.setPosition(100, 50);
     const StoryNodePort = StoryNode.addInPort(JSON.stringify(storyArgs));
