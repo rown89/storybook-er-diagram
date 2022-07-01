@@ -17,8 +17,6 @@ import {
 import { ADDON_ID, EVENTS, PARAM_KEY } from "./constants";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 
-// import * as xx from "../stories/Button.stories.js";
-
 interface TabProps {
   code: string;
   active: boolean;
@@ -106,8 +104,6 @@ export const Tab: React.FC<TabProps> = ({ active }) => {
       }
     }
   }, [erDiagram, paramData]);
-
-  useEffect(() => {}, []);
 
   return (
     <>
