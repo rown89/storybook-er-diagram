@@ -1,6 +1,6 @@
 {
   "name": "storybook-er-diagram",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Display an ER diagram of a component",
   "keywords": [
     "storybook-addons",
