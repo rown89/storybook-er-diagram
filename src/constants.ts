@@ -1,5 +1,5 @@
-export const ADDON_ID = "storybook/components-er-diagram";
-export const TAB_ID = `${ADDON_ID}/tab`;
+export const ADDON_ID = "storybook/er-diagram";
+export const TAB_ID = `${ADDON_ID}/erdiagram`;
 export const PARAM_KEY = `brandList`;
 
 export const EVENTS = {

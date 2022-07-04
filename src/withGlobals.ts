@@ -1,4 +1,4 @@
-import type { DecoratorFunction } from "@storybook/addons";
+import { DecoratorFunction, useArgs } from "@storybook/addons";
 import { useEffect, useGlobals } from "@storybook/addons";
 
 export const withGlobals: DecoratorFunction = (StoryFn, context) => {
@@ -6,8 +6,12 @@ export const withGlobals: DecoratorFunction = (StoryFn, context) => {
 
   useEffect(() => {
     updateGlobals({
-      erDiagram: erDiagram ? undefined : context,
+      erDiagram: context,
     });
+  }, []);
+
+  useEffect(() => {
+    // console.log(context);
   }, []);
 
   return StoryFn();

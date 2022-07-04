@@ -1,6 +1,6 @@
 {
-  "name": "storybook-component-er-diagram",
-  "version": "0.0.0",
+  "name": "storybook-er-diagram",
+  "version": "0.0.1",
   "description": "Display an ER diagram of a component",
   "keywords": [
     "storybook-addons",
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://github.com/rown89/storybook-addon-kit"
   },
-  "author": "Danilo Mongelli <info@danilomongelli.it>",
+  "author": "Danilo Mongelli <scorpion.own@gmail.com>",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

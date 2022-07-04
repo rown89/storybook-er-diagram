@@ -1,15 +1,15 @@
 import React, { lazy, useCallback, useEffect, useState } from "react";
 import { styled } from "@storybook/theming";
 import { Title, Source, Link } from "@storybook/components";
+import { addons } from "@storybook/addons";
+import { STORY_CHANGED, GLOBALS_UPDATED } from "@storybook/core-events";
 import {
   useGlobals,
-  useAddonState,
-  useChannel,
   useArgs,
-  useStoryPrepared,
   useParameter,
+  useStorybookApi,
 } from "@storybook/api";
-import { ADDON_ID, EVENTS, PARAM_KEY } from "./constants";
+import { PARAM_KEY } from "./constants";
 import createEngine, {
   DiagramEngine,
   DefaultLinkModel,
@@ -21,13 +21,12 @@ import createEngine, {
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 
 interface TabProps {
-  code: string;
   active: boolean;
 }
 
 interface BuildModelInterface {
   nodes: { [key: string]: string[] };
-  erDiagram: typeof useGlobals;
+  erDiagram: { [key: string]: any };
   storyArgs: typeof useArgs["arguments"];
 }
 
@@ -48,21 +47,19 @@ const StyledCanvasWidget = styled(CanvasWidget)({
 
 const updateModel = ({ erDiagram, nodes, storyArgs }: BuildModelInterface) => {
   const StoryNode = new DefaultNodeModel({
-    name: erDiagram.name,
+    name: erDiagram.story,
     color: "#029bf4",
   });
   StoryNode.setPosition(100, 50);
-  const StoryNodePort = StoryNode.addInPort(JSON.stringify(storyArgs));
+  const StoryNodePort = StoryNode.addOutPort(JSON.stringify(storyArgs));
 
-  let buildedNodes = nodes[erDiagram.name]
-    ? nodes[erDiagram.name].map((brand, index) => {
-        console.log(brand);
+  let buildedNodes = nodes[erDiagram.story]
+    ? nodes[erDiagram.story].map((brand, index) => {
         const brandNode = new DefaultNodeModel({
           name: brand,
           color: defaultNodeColor,
         });
         brandNode.setPosition(index + 2 * 260, index * 120 + index);
-        brandNode.updateDimensions({ width: 200, height: 200 });
         return brandNode;
       })
     : [];
@@ -76,20 +73,40 @@ const updateModel = ({ erDiagram, nodes, storyArgs }: BuildModelInterface) => {
   const result: (DefaultNodeModel | LinkModel<LinkModelGenerics>)[] = [
     ...buildedNodes,
     ...links,
-  ];
+  ].filter((item) => item !== undefined);
   return result;
 };
 
 export const Tab: React.FC<TabProps> = ({ active }) => {
-  const diagramEngine = createEngine();
+  const [engine, setEngine] = useState<DiagramEngine>(createEngine());
   const activeModel = new DiagramModel();
-
-  const [engine, setEngine] = useState<DiagramEngine>(diagramEngine);
   const [paintCanvas, setPaintCanvas] = useState(false);
 
+  const channel = addons.getChannel();
+  const storybookState = useStorybookApi();
+  const paramData = useParameter<{ [key: string]: string[] }>(PARAM_KEY, {});
   const [args, updateArgs, resetArgs] = useArgs();
   const [{ erDiagram }, updateGlobals] = useGlobals();
-  const paramData = useParameter<{ [key: string]: string[] }>(PARAM_KEY);
+
+  useEffect(() => {
+    channel.on(GLOBALS_UPDATED, (event) => {
+      console.log(event);
+      if (event.globals.erDiagram) {
+        setPaintCanvas(false);
+        activeModel.addAll(
+          ...updateModel({
+            erDiagram: event.globals.erDiagram,
+            nodes: paramData,
+            storyArgs: args,
+          })
+        );
+        engine.setModel(activeModel);
+        setEngine(engine);
+        setPaintCanvas(true);
+      }
+    });
+    return () => channel.off(GLOBALS_UPDATED, (event) => {});
+  }, [channel, paramData, args]);
 
   useEffect(() => {
     return () => {
@@ -97,25 +114,15 @@ export const Tab: React.FC<TabProps> = ({ active }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (paramData && erDiagram) {
-      setPaintCanvas(false);
-      activeModel.addAll(
-        ...updateModel({ erDiagram, nodes: paramData, storyArgs: args })
-      );
-      engine.setModel(activeModel);
-      setEngine(engine);
-      setPaintCanvas(true);
-    }
-  }, [erDiagram, paramData]);
-
   return (
     <>
-      <Wrapper>
-        {paintCanvas && (
-          <StyledCanvasWidget className="diagram-canvas" engine={engine} />
-        )}
-      </Wrapper>
+      {active && (
+        <Wrapper>
+          {paintCanvas && (
+            <StyledCanvasWidget className="diagram-canvas" engine={engine} />
+          )}
+        </Wrapper>
+      )}
     </>
   );
 };
