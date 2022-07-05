@@ -41,29 +41,33 @@ const StyledCanvasWidget = styled(CanvasWidget)({
   height: "100%",
 });
 
-const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
-  const StoryNode = new DefaultNodeModel({
-    name: storyName,
-    color: "#029bf4",
-  });
-  StoryNode.setPosition(100, 50);
-  const StoryNodePort = StoryNode.addOutPort(JSON.stringify(storyArgs));
+const NodeWidth = 200;
 
+const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
   let buildedNodes = nodes[storyName]
     ? nodes[storyName].map((brand, index) => {
         const brandNode = new DefaultNodeModel({
           name: brand,
           color: defaultNodeColor,
         });
-        brandNode.setPosition(index + 2 * 260, index * 120 + index);
+        brandNode.setPosition(NodeWidth * 3 + index, 80 * index + 30);
         return brandNode;
       })
     : [];
 
+  const StoryNode = new DefaultNodeModel({
+    name: storyName,
+    color: "#029bf4",
+  });
+  StoryNode.setPosition(50, 80);
+  const StoryNodePort = StoryNode.addOutPort(
+    JSON.stringify(storyArgs, null, 4)
+  );
+
   buildedNodes = [StoryNode, ...buildedNodes];
 
   const links = buildedNodes.map((item, index) => {
-    if (index > 0) return item.addInPort("brand").link(StoryNodePort);
+    if (index > 0) return StoryNodePort.link(item.addInPort("Link"));
   });
 
   const result: (DefaultNodeModel | LinkModel<LinkModelGenerics>)[] = [

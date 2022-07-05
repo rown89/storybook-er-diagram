@@ -5,7 +5,10 @@ export default {
   title: "Example/Button",
   component: Button,
   parameters: {
-    erDiagramList: { Primary: ["FarmaOra", "Zanclem"], Secondary: ["Zanclem"] },
+    erDiagramList: {
+      Primary: ["FarmaOra", "Zanclem", "Ferò Milano", "Cibo Crudo"],
+      Secondary: ["Zanclem"],
+    },
   },
 };
 
