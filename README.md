@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/logo.png" width="400" alt="storybook-er-diagram">
+  <img src="./assets/logo.jpg" width="400" alt="storybook-er-diagram">
   <br/>
 </div>
 
@@ -7,7 +7,12 @@
 
 ## storybook-er-diagram
 
-A [Storybook](https://github.com/storybooks/storybook) addon who manages links between component stories and the projects that use them.
+A [Storybook](https://github.com/storybooks/storybook) addon for Design Systems used by a lot of projects.
+
+When components behave in different ways, based on what props we are using, we write stories,
+but when our design system is used by a lot of different projects we can lose sight of the whole picture.
+
+Storybook ErDiagram manages links between component stories and projects that use them.
 
 ## Getting started
 
