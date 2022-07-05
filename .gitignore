@@ -6,3 +6,4 @@ build-storybook.log
 .env
 yarn-error.log
 .yarnclean
+.npmrc
