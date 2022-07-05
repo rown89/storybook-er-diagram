@@ -5,7 +5,7 @@ export default {
   title: "Example/Button",
   component: Button,
   parameters: {
-    brandList: { Primary: ["FarmaOra", "Zanclem"], Secondary: ["Zanclem"] },
+    erDiagramList: { Primary: ["FarmaOra", "Zanclem"], Secondary: ["Zanclem"] },
   },
 };
 

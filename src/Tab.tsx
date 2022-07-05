@@ -1,18 +1,14 @@
-import React, { lazy, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@storybook/theming";
-import { Title, Source, Link } from "@storybook/components";
-import { addons } from "@storybook/addons";
-import { STORY_CHANGED, GLOBALS_UPDATED } from "@storybook/core-events";
 import {
   useGlobals,
   useArgs,
   useParameter,
-  useStorybookApi,
+  useStorybookState,
 } from "@storybook/api";
 import { PARAM_KEY } from "./constants";
 import createEngine, {
   DiagramEngine,
-  DefaultLinkModel,
   LinkModel,
   LinkModelGenerics,
   DefaultNodeModel,
@@ -25,8 +21,8 @@ interface TabProps {
 }
 
 interface BuildModelInterface {
+  storyName: string;
   nodes: { [key: string]: string[] };
-  erDiagram: { [key: string]: any };
   storyArgs: typeof useArgs["arguments"];
 }
 
@@ -45,16 +41,16 @@ const StyledCanvasWidget = styled(CanvasWidget)({
   height: "100%",
 });
 
-const updateModel = ({ erDiagram, nodes, storyArgs }: BuildModelInterface) => {
+const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
   const StoryNode = new DefaultNodeModel({
-    name: erDiagram.story,
+    name: storyName,
     color: "#029bf4",
   });
   StoryNode.setPosition(100, 50);
   const StoryNodePort = StoryNode.addOutPort(JSON.stringify(storyArgs));
 
-  let buildedNodes = nodes[erDiagram.story]
-    ? nodes[erDiagram.story].map((brand, index) => {
+  let buildedNodes = nodes[storyName]
+    ? nodes[storyName].map((brand, index) => {
         const brandNode = new DefaultNodeModel({
           name: brand,
           color: defaultNodeColor,
@@ -78,35 +74,29 @@ const updateModel = ({ erDiagram, nodes, storyArgs }: BuildModelInterface) => {
 };
 
 export const Tab: React.FC<TabProps> = ({ active }) => {
+  const state = useStorybookState();
+  const paramData = useParameter<{ [key: string]: string[] }>(PARAM_KEY, {});
+  const [args, updateArgs, resetArgs] = useArgs();
+  // const [{ erDiagram }, updateGlobals] = useGlobals();
+
   const [engine, setEngine] = useState<DiagramEngine>(createEngine());
   const activeModel = new DiagramModel();
   const [paintCanvas, setPaintCanvas] = useState(false);
 
-  const channel = addons.getChannel();
-  const storybookState = useStorybookApi();
-  const paramData = useParameter<{ [key: string]: string[] }>(PARAM_KEY, {});
-  const [args, updateArgs, resetArgs] = useArgs();
-  const [{ erDiagram }, updateGlobals] = useGlobals();
-
   useEffect(() => {
-    channel.on(GLOBALS_UPDATED, (event) => {
-      console.log(event);
-      if (event.globals.erDiagram) {
-        setPaintCanvas(false);
-        activeModel.addAll(
-          ...updateModel({
-            erDiagram: event.globals.erDiagram,
-            nodes: paramData,
-            storyArgs: args,
-          })
-        );
-        engine.setModel(activeModel);
-        setEngine(engine);
-        setPaintCanvas(true);
-      }
-    });
-    return () => channel.off(GLOBALS_UPDATED, (event) => {});
-  }, [channel, paramData, args]);
+    if (active && state.storiesHash[state?.storyId]) {
+      activeModel.addAll(
+        ...updateModel({
+          storyName: state?.storiesHash[state?.storyId]?.name,
+          nodes: paramData,
+          storyArgs: args,
+        })
+      );
+      engine.setModel(activeModel);
+      setEngine(engine);
+      setPaintCanvas(true);
+    }
+  }, [state]);
 
   useEffect(() => {
     return () => {

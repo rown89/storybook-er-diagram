@@ -8,11 +8,7 @@ export const withGlobals: DecoratorFunction = (StoryFn, context) => {
     updateGlobals({
       erDiagram: context,
     });
-  }, []);
+  }, [context.story]);
 
-  useEffect(() => {
-    // console.log(context);
-  }, []);
-
-  return StoryFn();
+  return StoryFn(context);
 };
