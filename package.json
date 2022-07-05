@@ -1,6 +1,6 @@
 {
   "name": "storybook-er-diagram",
-  "version": "1.0.2",
+  "version": "0.0.9",
   "description": "When components behave in different ways, based on what props we are using, we write stories, but when our design system is used by a lot of different projects we can lose sight of the whole picture. Storybook ErDiagram manages links between component stories and projects that use them.",
   "keywords": [
     "storybook-addons",
