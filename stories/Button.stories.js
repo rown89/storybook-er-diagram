@@ -6,8 +6,8 @@ export default {
   component: Button,
   parameters: {
     erDiagramList: {
-      Primary: ["FarmaOra", "Zanclem", "Ferò Milano", "Cibo Crudo"],
-      Secondary: ["Zanclem"],
+      Primary: ["Project-A", "Project-B", "Project-C", "Project-D"],
+      Secondary: ["Project-A", "Project-C"],
     },
   },
 };
