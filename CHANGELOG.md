@@ -1,3 +1,15 @@
+# v0.1.7 (Fri Jul 08 2022)
+
+#### ⚠️ Pushed to `main`
+
+- edit readme and img ([@rown89](https://github.com/rown89))
+
+#### Authors: 1
+
+- Danilo Mongelli ([@rown89](https://github.com/rown89))
+
+---
+
 # v0.1.6 (Fri Jul 08 2022)
 
 #### ⚠️ Pushed to `main`
