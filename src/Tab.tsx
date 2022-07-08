@@ -65,27 +65,18 @@ const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
     (
       <div
         style={{
-          width: 200,
+          width: 250,
           wordBreak: "break-all",
           whiteSpace: "pre-wrap",
           marginRight: 10,
         }}
       >
+        <br></br>
+        <b>PROPS:</b>
+        <br></br>
+        <br></br>
         {Object.keys(storyArgs).map((arg, index) => {
-          console.log(storyArgs[arg]?.type);
-          return (
-            <div key={index} style={{ margin: 5 }}>
-              {storyArgs[arg]?.type ? (
-                <>
-                  {arg}: {`<${storyArgs[arg]?.type} />`}
-                </>
-              ) : (
-                <>
-                  {arg}: {storyArgs[arg].toString()}
-                </>
-              )}
-            </div>
-          );
+          return <div style={{ margin: 5 }}>{arg}</div>;
         })}
       </div>
     ) as unknown as string
@@ -116,7 +107,6 @@ export const Tab: React.FC<TabProps> = ({ active }) => {
 
   useEffect(() => {
     if (active && state.storiesHash[state?.storyId]) {
-      console.log("name:\n", state?.storiesHash[state?.storyId]?.name);
       activeModel.addAll(
         ...updateModel({
           storyName: state?.storiesHash[state?.storyId]?.name,

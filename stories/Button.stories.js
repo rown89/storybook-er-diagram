@@ -17,6 +17,15 @@ const Template = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   primary: true,
+  content: [
+    [<>Val 1 </>, <>Val 1</>, <>Val 1</>, <>Val 1</>],
+    [<>Val 2</>, <>Val 2</>, <>Val 2</>, <>Val 2</>],
+    [<>Val 3</>, <>Val 3</>, <>Val 3</>, <>Val 3</>],
+    [<>Val 4</>, <>Val 4</>, <>Val 4</>, <>Val 4</>],
+    [<>Val 5</>, <>Val 5</>, <>Val 5</>, <>Val 5</>],
+    [<>Val 6</>, <>Val 6</>, <>Val 6</>, <>Val 6</>],
+    [<>Val 7</>, <>Val 7</>, <>Val 7</>, <>Val 7</>],
+  ],
   image: (
     <img
       src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800&q=80&crop=entropy"

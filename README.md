@@ -1,14 +1,14 @@
 ## storybook-er-diagram
 
-A [Storybook](https://github.com/storybooks/storybook) addon for Design Systems used by a lot of projects.
+A [Storybook](https://github.com/storybooks/storybook) addon useful when you have many projects built on top of a unique Design System.
 
 <div align="center">
   <img src="./assets/logo.jpg" width="400" alt="storybook-er-diagram logo">
   <br/>
 </div>
 
-When components behave in different ways, based on what props we are using, we write stories,
-but when our design system is used by a lot of different projects we can lose sight of the whole picture.
+A component can behave in different ways and storybook stories describe them.
+When your Design System is used by a lot of different projects we can lose sight of the whole picture.
 
 Storybook ErDiagram manages links between component stories and projects that use them.
 
@@ -34,6 +34,11 @@ module.exports = {
 add `erDiagramList` object to the story default export parameters and use the template name as key.
 The name must be equal to the story template.
 
+<div align="center">
+  <img src="./assets/example-storybook.png" width="600" alt="storybook-er-diagram example">
+  <br/>
+</div>
+
 ```js
 export default {
   title: "Example/Button",
@@ -41,17 +46,15 @@ export default {
   parameters: {
     erDiagramList: {
       Primary: ["Project-A", "Project-B", "Project-C", "Project-D"],
-      Secondary: ["Project-B", "Project-C"],
+      ["Second Story"]: ["Project-B", "Project-C"],
+      ["Another story"]: ["Project-A", "Project-D"],
     },
   },
 
 const Template = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
-export const Secondary = Template.bind({});
+export const secondStory = Template.bind({});
+export const thirdStory = Template.bind({});
+thirdStory.storyName = "Another story"
 };
 ```
-
-<div align="center">
-  <img src="./assets/example-storybook.png" width="600" alt="storybook-er-diagram example">
-  <br/>
-</div>
