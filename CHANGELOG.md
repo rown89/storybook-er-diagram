@@ -1,3 +1,15 @@
+# v0.1.3 (Fri Jul 08 2022)
+
+#### ⚠️ Pushed to `main`
+
+- add capitalizedargskey ([@rown89](https://github.com/rown89))
+
+#### Authors: 1
+
+- Danilo Mongelli ([@rown89](https://github.com/rown89))
+
+---
+
 # v0.0.10 (Thu Jul 07 2022)
 
 #### ⚠️ Pushed to `main`
