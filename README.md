@@ -35,9 +35,12 @@ add `erDiagramList` object to the story default export parameters and use the te
 The name must be equal to the story template.
 
 <div align="center">
-  <img src="./assets/example-storybook.png" width="600" alt="storybook-er-diagram example">
+  <img src="./assets/example-storybook.jpg" width="600" alt="storybook-er-diagram example">
   <br/>
 </div>
+</br>
+
+### 4. Example
 
 ```js
 export default {

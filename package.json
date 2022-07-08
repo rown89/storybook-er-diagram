@@ -10,7 +10,8 @@
     "storybook organizer",
     "brands",
     "design system",
-    "storybook stories per project"
+    "storybook stories per project",
+    "storybook react addon"
   ],
   "repository": {
     "type": "git",
