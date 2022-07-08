@@ -61,27 +61,32 @@ const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
   });
   StoryNode.setPosition(30, 30);
 
-  const capitalizedArgsKey = Object.keys(storyArgs).reduce((o: any, k) => {
-    if (k) {
-      o[k.toUpperCase()] = storyArgs[k];
-      return o;
-    }
-  }, {});
-
-  const stringifyArgs = JSON.stringify(capitalizedArgsKey, null, 2);
-
   const StoryNodePort = StoryNode.addOutPort(
     (
       <div
         style={{
-          width: "100%",
-          maxWidth: 420,
+          width: 200,
           wordBreak: "break-all",
           whiteSpace: "pre-wrap",
           marginRight: 10,
         }}
       >
-        {stringifyArgs}
+        {Object.keys(storyArgs).map((arg, index) => {
+          console.log(storyArgs[arg]?.type);
+          return (
+            <div key={index} style={{ margin: 5 }}>
+              {storyArgs[arg]?.type ? (
+                <>
+                  {arg}: {`<${storyArgs[arg]?.type} />`}
+                </>
+              ) : (
+                <>
+                  {arg}: {storyArgs[arg].toString()}
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     ) as unknown as string
   );
@@ -111,6 +116,7 @@ export const Tab: React.FC<TabProps> = ({ active }) => {
 
   useEffect(() => {
     if (active && state.storiesHash[state?.storyId]) {
+      console.log("name:\n", state?.storiesHash[state?.storyId]?.name);
       activeModel.addAll(
         ...updateModel({
           storyName: state?.storiesHash[state?.storyId]?.name,

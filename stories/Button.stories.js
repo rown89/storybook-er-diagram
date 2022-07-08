@@ -7,7 +7,7 @@ export default {
   parameters: {
     erDiagramList: {
       Primary: ["Project-A", "Project-B", "Project-C", "Project-D"],
-      Secondary: ["Project-A", "Project-C"],
+      ["With Name"]: ["Project-A", "Project-C"],
     },
   },
 };
@@ -17,7 +17,6 @@ const Template = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   primary: true,
-  label: "Button",
   image: (
     <img
       src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800&q=80&crop=entropy"
@@ -25,24 +24,41 @@ Primary.args = {
     />
   ),
   title: <a href="#">Integratori per sportivi</a>,
-  paragraph:
-    "How do you create compelling presentations that wow your colleagues and impress your managers?",
-  cta: "Leggi",
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
   label: "Button",
+  cta: "Read More",
+  primdary: true,
+  imagde: (
+    <img
+      src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800&q=80&crop=entropy"
+      alt=""
+    />
+  ),
+  titdle: <a href="#">Integratori per sportivi</a>,
+  labdel: "Button",
+  ctda: "Read More",
+  primsary: true,
+  imasge: (
+    <img
+      src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800&q=80&crop=entropy"
+      alt=""
+    />
+  ),
+  tistle: <a href="#">Integratori per sportivi</a>,
+  lasbel: "Button",
+  ctsa: "Read More",
+  prim3ary: true,
+  ima3ge: (
+    <img
+      src="https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800&q=80&crop=entropy"
+      alt=""
+    />
+  ),
+  ti3tle: <a href="#">Integratori per sportivi</a>,
+  la3bel: "Button",
+  ct3a: "Read More",
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: "large",
-  label: "Button",
-};
-
-export const Small = Template.bind({});
-Small.args = {
-  size: "small",
+export const withName = Template.bind({});
+withName.args = {
   label: "Button",
 };
