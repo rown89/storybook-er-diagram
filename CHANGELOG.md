@@ -1,3 +1,15 @@
+# v0.1.4 (Fri Jul 08 2022)
+
+#### ⚠️ Pushed to `main`
+
+- adjust width in storynodeport ([@rown89](https://github.com/rown89))
+
+#### Authors: 1
+
+- Danilo Mongelli ([@rown89](https://github.com/rown89))
+
+---
+
 # v0.1.3 (Fri Jul 08 2022)
 
 #### ⚠️ Pushed to `main`
