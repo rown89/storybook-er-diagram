@@ -74,7 +74,7 @@ const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
     (
       <div
         style={{
-          width: "auto",
+          width: "100%",
           maxWidth: 420,
           wordBreak: "break-all",
           whiteSpace: "pre-wrap",
