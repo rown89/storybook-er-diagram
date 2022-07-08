@@ -50,7 +50,7 @@ const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
           name: brand,
           color: defaultNodeColor,
         });
-        brandNode.setPosition(NodeWidth * 3 + index, 80 * index + 30);
+        brandNode.setPosition(NodeWidth * 3 + index, 70 * index + 30);
         return brandNode;
       })
     : [];
@@ -59,9 +59,31 @@ const updateModel = ({ storyName, nodes, storyArgs }: BuildModelInterface) => {
     name: storyName,
     color: "#029bf4",
   });
-  StoryNode.setPosition(50, 80);
+  StoryNode.setPosition(30, 30);
+
+  const capitalizedArgsKey = Object.keys(storyArgs).reduce((o: any, k) => {
+    if (k) {
+      o[k.toUpperCase()] = storyArgs[k];
+      return o;
+    }
+  }, {});
+
+  const stringifyArgs = JSON.stringify(capitalizedArgsKey, null, 2);
+
   const StoryNodePort = StoryNode.addOutPort(
-    JSON.stringify(storyArgs, null, 4)
+    (
+      <div
+        style={{
+          width: "auto",
+          maxWidth: 420,
+          wordBreak: "break-all",
+          whiteSpace: "pre-wrap",
+          marginRight: 10,
+        }}
+      >
+        {stringifyArgs}
+      </div>
+    ) as unknown as string
   );
 
   buildedNodes = [StoryNode, ...buildedNodes];
